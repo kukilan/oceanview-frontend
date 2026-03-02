@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">Rooms</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Room No</th>
+        <th>Single Beds</th>
+        <th>Double Beds</th>
+        <th>Triple Beds</th>
+        <th>Total Beds</th>
+        <th>AC</th>
+        <th>Price (LKR)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let room of rooms">
+        <td>{{ room.roomNumber }}</td>
+        <td>{{ room.singleBeds }}</td>
+        <td>{{ room.doubleBeds }}</td>
+        <td>{{ room.tripleBeds }}</td>
+        <td>{{ room.totalBeds }}</td>
+        <td>
+          <span [ngClass]="room.isAc ? 'text-success' : 'text-danger'">
+            {{ room.isAc ? 'Yes' : 'No' }}
+          </span>
+        </td>
+        <td>{{ room.pricePerNight }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
