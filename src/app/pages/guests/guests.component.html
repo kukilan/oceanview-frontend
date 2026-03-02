@@ -1,1 +1,92 @@
-<p>guests works!</p>
+<div class="container-fluid">
+
+  <h2 class="text-primary mb-4">Guest Management</h2>
+
+  <!-- Search + Add -->
+  <div class="card shadow-sm p-4 mb-4">
+
+    <div class="row align-items-center">
+
+      <div class="col-md-4">
+        <button class="btn btn-success w-100"
+                (click)="openCreateGuest()">
+          + Add New Guest
+        </button>
+      </div>
+
+      <div class="col-md-8">
+        <div class="input-group">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Search by phone or email"
+                 [(ngModel)]="searchValue">
+
+          <button class="btn btn-primary"
+                  (click)="searchGuest()">
+            Search
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Edit / Create Form -->
+  <div *ngIf="selectedGuest" class="card shadow-sm p-4">
+
+    <h5 class="mb-3">
+      {{ showCreateForm ? 'Create Guest' : 'Edit Guest' }}
+    </h5>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Full Name</label>
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="selectedGuest.fullName">
+      </div>
+
+      <div class="col-md-6">
+        <label>Contact Number</label>
+        <input type="text"
+               class="form-control"
+               [(ngModel)]="selectedGuest.contactNumber">
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label>Email</label>
+        <input type="email"
+               class="form-control"
+               [(ngModel)]="selectedGuest.email">
+      </div>
+
+      <div class="col-md-6">
+        <label>Gender</label>
+        <select class="form-select"
+                [(ngModel)]="selectedGuest.gender">
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Address</label>
+      <textarea class="form-control"
+                rows="2"
+                [(ngModel)]="selectedGuest.address">
+      </textarea>
+    </div>
+
+    <button class="btn btn-success"
+            (click)="saveGuest()">
+      Save Guest
+    </button>
+
+  </div>
+
+</div>
