@@ -1,0 +1,97 @@
+<div class="container-fluid">
+
+  <h2 class="text-primary mb-4">Create Reservation</h2>
+
+  <div class="row">
+
+    <!-- LEFT SIDE -->
+    <div class="col-md-8">
+
+      <!-- Guest Search -->
+      <div class="card shadow-sm p-4 mb-4">
+
+        <h5 class="mb-3">Find Guest</h5>
+
+        <div class="input-group mb-3">
+          <input type="text"
+                 class="form-control"
+                 placeholder="Enter phone or email"
+                 [(ngModel)]="searchValue">
+
+          <button class="btn btn-primary"
+                  (click)="searchGuest()">
+            Search
+          </button>
+        </div>
+
+        <!-- Guest Details -->
+        <div *ngIf="selectedGuest" class="border rounded p-3 bg-light">
+
+          <h6>Guest Details</h6>
+
+          <p><strong>Name:</strong> {{ selectedGuest.fullName }}</p>
+          <p><strong>Email:</strong> {{ selectedGuest.email }}</p>
+          <p><strong>Contact:</strong> {{ selectedGuest.contactNumber }}</p>
+          <p><strong>Gender:</strong> {{ selectedGuest.gender }}</p>
+
+        </div>
+
+      </div>
+
+      <!-- Booking Details -->
+      <div class="card shadow-sm p-4">
+
+        <h5 class="mb-3">Booking Details</h5>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label>Room Number</label>
+            <select class="form-select">
+              <option>Select Room</option>
+              <option>Room 1</option>
+              <option>Room 2</option>
+              <option>Room 3</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label>Check-in Date</label>
+            <input type="date" class="form-control">
+          </div>
+
+          <div class="col-md-4">
+            <label>Check-out Date</label>
+            <input type="date" class="form-control">
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE SUMMARY -->
+    <div class="col-md-4">
+
+      <div class="card shadow-sm p-4">
+
+        <h5 class="mb-3">Reservation Summary</h5>
+
+        <p><strong>Room:</strong> Room 1</p>
+        <p><strong>Nights:</strong> 2</p>
+        <p><strong>Price per Night:</strong> LKR 15,000</p>
+
+        <hr>
+
+        <h4 class="text-success">Total: LKR 30,000</h4>
+
+        <button class="btn btn-success w-100 mt-3">
+          Confirm Reservation
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

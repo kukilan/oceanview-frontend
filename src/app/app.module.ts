@@ -13,6 +13,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { RoomsComponent } from './pages/rooms/rooms.component';
 import { LayoutComponent } from './layout/layout.component';
 import { GuestsComponent } from './pages/guests/guests.component';
+import { ReservationsComponent } from './pages/reservations/reservations.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { GuestsComponent } from './pages/guests/guests.component';
     DashboardComponent,
     RoomsComponent,
     LayoutComponent,
-    GuestsComponent
+    GuestsComponent,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,
