@@ -13,4 +13,17 @@ export class RoomService {
   getRooms() {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  createRoom(data: any) {
+    return this.http.post(this.apiUrl, data);
+  }
+
+  updateRoom(id: number, data: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
+  }
+
+  deleteRoom(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
 }

@@ -1,32 +1,184 @@
-<div class="container mt-4">
-  <h2 class="text-primary mb-4">Rooms</h2>
+<div class="container-fluid">
 
-  <table class="table table-bordered table-striped">
-    <thead class="table-dark">
-      <tr>
-        <th>Room No</th>
-        <th>Single Beds</th>
-        <th>Double Beds</th>
-        <th>Triple Beds</th>
-        <th>Total Beds</th>
-        <th>AC</th>
-        <th>Price (LKR)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let room of rooms">
-        <td>{{ room.roomNumber }}</td>
-        <td>{{ room.singleBeds }}</td>
-        <td>{{ room.doubleBeds }}</td>
-        <td>{{ room.tripleBeds }}</td>
-        <td>{{ room.totalBeds }}</td>
-        <td>
-          <span [ngClass]="room.isAc ? 'text-success' : 'text-danger'">
-            {{ room.isAc ? 'Yes' : 'No' }}
-          </span>
-        </td>
-        <td>{{ room.pricePerNight }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <h2 class="text-primary mb-4">Room Management</h2>
+
+  <!-- Add Button -->
+  <div class="mb-3">
+    <button
+      class="btn btn-success"
+      (click)="openCreateRoom()">
+
+      + Add Room
+
+    </button>
+  </div>
+
+  <div class="row">
+
+    <!-- LEFT SIDE ROOM LIST -->
+    <div class="col-md-7">
+
+      <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+          <tr>
+            <th>Room No</th>
+            <th>Total Beds</th>
+            <th>AC</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let room of rooms"
+            (click)="selectRoom(room)"
+            style="cursor:pointer">
+
+            <td>{{ room.roomNumber }}</td>
+            <td>{{ room.totalBeds }}</td>
+
+            <td>
+
+              <span
+                [ngClass]="room.isAc ? 'text-success' : 'text-danger'">
+
+                {{ room.isAc ? 'AC' : 'Non AC' }}
+
+              </span>
+
+            </td>
+
+            <td>LKR {{ room.pricePerNight }}</td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- RIGHT SIDE EDIT FORM -->
+    <div class="col-md-5" *ngIf="selectedRoom">
+
+      <div class="card shadow-sm p-4">
+
+        <h5 class="mb-3">
+
+          {{ showCreateForm ? 'Create Room' : 'Edit Room' }}
+
+        </h5>
+
+        <div class="mb-3">
+
+          <label>Room Number</label>
+
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedRoom.roomNumber">
+
+        </div>
+
+
+        <div class="row mb-3">
+
+          <div class="col-md-4">
+
+            <label>Single Beds</label>
+
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="selectedRoom.singleBeds">
+
+          </div>
+
+          <div class="col-md-4">
+
+            <label>Double Beds</label>
+
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="selectedRoom.doubleBeds">
+
+          </div>
+
+          <div class="col-md-4">
+
+            <label>Triple Beds</label>
+
+            <input
+              type="number"
+              class="form-control"
+              [(ngModel)]="selectedRoom.tripleBeds">
+
+          </div>
+
+        </div>
+
+
+        <div class="mb-3">
+
+          <label>AC Type</label>
+
+          <select
+            class="form-select"
+            [(ngModel)]="selectedRoom.isAc">
+
+            <option [ngValue]="true">AC</option>
+            <option [ngValue]="false">Non AC</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="mb-3">
+
+          <label>Price Per Night</label>
+
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedRoom.pricePerNight">
+
+        </div>
+
+
+        <button
+          class="btn btn-success me-2"
+          (click)="saveRoom()">
+
+          Save
+
+        </button>
+
+
+        <button
+          *ngIf="!showCreateForm"
+          class="btn btn-danger"
+          (click)="deleteRoom()">
+
+          Delete
+
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          (click)="cancelEdit()">
+
+          ← Back
+
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
