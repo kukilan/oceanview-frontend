@@ -7,21 +7,29 @@
     <!-- LEFT SIDE -->
     <div class="col-md-8">
 
+      <!-- ===================== -->
       <!-- Guest Search -->
+      <!-- ===================== -->
       <div class="card shadow-sm p-4 mb-4">
 
         <h5 class="mb-3">Find Guest</h5>
 
         <div class="input-group mb-3">
-          <input type="text"
-                 class="form-control"
-                 placeholder="Enter phone or email"
-                 [(ngModel)]="searchValue">
 
-          <button class="btn btn-primary"
-                  (click)="searchGuest()">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter phone or email"
+            [(ngModel)]="searchValue">
+
+          <button
+            class="btn btn-primary"
+            (click)="searchGuest()">
+
             Search
+
           </button>
+
         </div>
 
         <!-- Guest Details -->
@@ -38,54 +46,148 @@
 
       </div>
 
+
+      <!-- ===================== -->
       <!-- Booking Details -->
+      <!-- ===================== -->
       <div class="card shadow-sm p-4">
 
         <h5 class="mb-3">Booking Details</h5>
 
         <div class="row mb-3">
-          <div class="col-md-4">
-            <label>Room Number</label>
-            <select class="form-select">
-              <option>Select Room</option>
-              <option>Room 1</option>
-              <option>Room 2</option>
-              <option>Room 3</option>
-            </select>
-          </div>
 
           <div class="col-md-4">
+
             <label>Check-in Date</label>
-            <input type="date" class="form-control">
+
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="reservation.checkIn"
+              (change)="calculateBill()">
+
           </div>
 
           <div class="col-md-4">
+
             <label>Check-out Date</label>
-            <input type="date" class="form-control">
+
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="reservation.checkOut"
+              (change)="calculateBill()">
+
           </div>
+
+          <div class="col-md-4 d-flex align-items-end">
+
+            <button
+              class="btn btn-info w-100"
+              (click)="checkAvailability()">
+
+              Check Available Rooms
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- ===================== -->
+        <!-- Available Rooms Table -->
+        <!-- ===================== -->
+
+        <div *ngIf="availableRooms.length > 0">
+
+          <h6 class="mt-3">Available Rooms</h6>
+
+          <table class="table table-bordered table-hover">
+
+            <thead class="table-light">
+
+              <tr>
+                <th>Room</th>
+                <th>AC</th>
+                <th>Total Beds</th>
+                <th>Price/Night</th>
+                <th>Select</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let room of availableRooms">
+
+                <td>{{ room.roomNumber }}</td>
+
+                <td>{{ room.isAc ? 'AC' : 'Non AC' }}</td>
+
+                <td>{{ room.totalBeds }}</td>
+
+                <td>LKR {{ room.pricePerNight }}</td>
+
+                <td>
+
+                  <button
+                    class="btn btn-sm btn-success"
+                    (click)="selectRoom(room)">
+
+                    Select
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
         </div>
 
       </div>
 
     </div>
 
+
+    <!-- ===================== -->
     <!-- RIGHT SIDE SUMMARY -->
+    <!-- ===================== -->
+
     <div class="col-md-4">
 
       <div class="card shadow-sm p-4">
 
         <h5 class="mb-3">Reservation Summary</h5>
 
-        <p><strong>Room:</strong> Room 1</p>
-        <p><strong>Nights:</strong> 2</p>
-        <p><strong>Price per Night:</strong> LKR 15,000</p>
+        <p><strong>Guest:</strong> {{ selectedGuest?.fullName }}</p>
+
+        <p><strong>Room:</strong> {{ selectedRoom?.roomNumber }}</p>
+
+        <p><strong>Check-in:</strong> {{ reservation.checkIn }}</p>
+
+        <p><strong>Check-out:</strong> {{ reservation.checkOut }}</p>
+
+        <p><strong>Nights:</strong> {{ calculation?.days }}</p>
+
+        <p><strong>Price per Night:</strong> LKR {{ calculation?.pricePerNight }}</p>
 
         <hr>
 
-        <h4 class="text-success">Total: LKR 30,000</h4>
+        <h4 class="text-success">
+          Total: LKR {{ calculation?.totalAmount }}
+        </h4>
 
-        <button class="btn btn-success w-100 mt-3">
+        <button
+          class="btn btn-success w-100 mt-3"
+          (click)="createReservation()">
+
           Confirm Reservation
+
         </button>
 
       </div>
