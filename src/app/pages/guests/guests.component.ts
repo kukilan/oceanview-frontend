@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GuestService } from '../../core/guest.service';
 
 @Component({
   selector: 'app-guests',
@@ -7,56 +8,106 @@ import { Component } from '@angular/core';
 export class GuestsComponent {
 
   searchValue = '';
+
   selectedGuest: any = null;
+
   showCreateForm = false;
 
-  // Hardcoded demo guests
-  guests = [
-    {
-      id: 1,
-      fullName: 'John Silva',
-      email: 'john@gmail.com',
-      contactNumber: '0771234567',
-      gender: 'Male',
-      address: 'Colombo'
-    },
-    {
-      id: 2,
-      fullName: 'Nimali Perera',
-      email: 'nimali@gmail.com',
-      contactNumber: '0779876543',
-      gender: 'Female',
-      address: 'Galle'
-    }
-  ];
+  constructor(private guestService: GuestService) {}
 
+  // ======================
+  // Search Guest
+  // ======================
   searchGuest() {
+
+    if (!this.searchValue) {
+      alert('Enter phone number or email');
+      return;
+    }
 
     this.showCreateForm = false;
 
-    this.selectedGuest = this.guests.find(g =>
-      g.contactNumber === this.searchValue ||
-      g.email === this.searchValue
-    );
+    this.guestService.searchGuest(this.searchValue)
+      .subscribe({
 
-    if (!this.selectedGuest) {
-      alert('Guest not found');
-    }
+        next: (data) => {
+
+          this.selectedGuest = data;
+
+        },
+
+        error: () => {
+
+          alert('Guest not found');
+
+          this.selectedGuest = null;
+
+        }
+
+      });
+
   }
 
+  // ======================
+  // Open Create Guest Form
+  // ======================
   openCreateGuest() {
+
     this.selectedGuest = {
       fullName: '',
       email: '',
       contactNumber: '',
       gender: '',
-      address: ''
+      address: '',
+      dateOfBirth: ''
     };
+
     this.showCreateForm = true;
+
   }
 
+  // ======================
+  // Save Guest
+  // ======================
   saveGuest() {
-    alert('Guest saved (demo mode)');
-    this.showCreateForm = false;
+
+    if (this.showCreateForm) {
+
+      // CREATE
+      this.guestService.createGuest(this.selectedGuest)
+        .subscribe(() => {
+
+          alert('Guest created successfully');
+
+          this.resetForm();
+
+        });
+
+    } else {
+
+      // UPDATE
+      this.guestService.updateGuest(this.selectedGuest.id, this.selectedGuest)
+        .subscribe(() => {
+
+          alert('Guest updated successfully');
+
+        });
+
+    }
+
   }
+
+  // ======================
+  // Reset Form
+  // ======================
+  resetForm() {
+
+    this.selectedGuest = null;
+
+    this.searchValue = '';
+
+    this.showCreateForm = false;
+
+  }
+
 }
