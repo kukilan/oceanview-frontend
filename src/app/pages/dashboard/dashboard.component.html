@@ -1,33 +1,185 @@
 <div class="container-fluid">
-  <!-- Main Content -->
-  <div class="flex-fill p-4">
 
-    <h2 class="text-primary mb-4">Dashboard Overview</h2>
+  <h2 class="text-primary mb-4">Dashboard Overview</h2>
 
-    <div class="row">
+  <!-- STATISTICS -->
+  <div class="row mb-4">
 
-      <div class="col-md-4 mb-3">
-        <div class="card shadow-sm text-center p-3">
-          <h5>Total Rooms</h5>
-          <h3 class="text-primary">10</h3>
+    <div class="col-md-4">
+      <div class="card shadow-sm text-center p-3">
+
+        <h5>Total Rooms</h5>
+
+        <h3 class="text-primary">
+          {{ stats?.totalRooms }}
+        </h3>
+
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm text-center p-3">
+
+        <h5>Active Reservations</h5>
+
+        <h3 class="text-success">
+          {{ stats?.activeReservations }}
+        </h3>
+
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm text-center p-3">
+
+        <h5>Revenue Today</h5>
+
+        <h3 class="text-warning">
+          LKR {{ stats?.todayRevenue }}
+        </h3>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <div class="row">
+
+    <!-- ROOM SEARCH -->
+    <div class="col-md-6">
+
+      <div class="card shadow-sm p-4">
+
+        <h5 class="mb-3">Check Room Status</h5>
+
+        <div class="input-group mb-3">
+
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Enter Room Number"
+            [(ngModel)]="roomNumber">
+
+          <button
+            class="btn btn-primary"
+            (click)="checkRoom()">
+
+            Check
+
+          </button>
+
         </div>
+
+
+        <div *ngIf="roomStatus">
+
+          <div *ngIf="roomStatus.status === 'AVAILABLE'">
+
+            <p class="text-success">
+              Room is available today
+            </p>
+
+          </div>
+
+          <div *ngIf="roomStatus.status === 'OCCUPIED'">
+
+            <p class="text-danger">
+              Room is currently occupied
+            </p>
+
+            <p>
+              <strong>Guest:</strong>
+              {{ roomStatus.guestName }}
+            </p>
+
+            <p>
+              <strong>Contact:</strong>
+              {{ roomStatus.contactNumber }}
+            </p>
+
+            <p>
+              <strong>Checkout:</strong>
+              {{ roomStatus.checkOut }}
+            </p>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="col-md-4 mb-3">
-        <div class="card shadow-sm text-center p-3">
-          <h5>Active Reservations</h5>
-          <h3 class="text-success">5</h3>
-        </div>
-      </div>
+    </div>
 
-      <div class="col-md-4 mb-3">
-        <div class="card shadow-sm text-center p-3">
-          <h5>Revenue (Today)</h5>
-          <h3 class="text-warning">LKR 75,000</h3>
+
+    <!-- RESERVATION SEARCH -->
+    <div class="col-md-6">
+
+      <div class="card shadow-sm p-4">
+
+        <h5 class="mb-3">Search Reservation</h5>
+
+        <div class="input-group mb-3">
+
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Enter Reservation ID"
+            [(ngModel)]="reservationNumber">
+
+          <button
+            class="btn btn-primary"
+            (click)="searchReservation()">
+
+            Find
+
+          </button>
+
         </div>
+
+
+        <div *ngIf="reservation">
+
+          <p>
+            <strong>Guest ID:</strong>
+            {{ reservation.guestId }}
+          </p>
+
+          <p>
+            <strong>Room ID:</strong>
+            {{ reservation.roomId }}
+          </p>
+
+          <p>
+            <strong>Check-in:</strong>
+            {{ reservation.checkIn }}
+          </p>
+
+          <p>
+            <strong>Check-out:</strong>
+            {{ reservation.checkOut }}
+          </p>
+
+          <p>
+            <strong>Total Bill:</strong>
+            LKR {{ reservation.totalBill }}
+          </p>
+
+
+          <button
+            class="btn btn-danger btn-sm"
+            (click)="cancelReservation()">
+
+            Cancel Reservation
+
+          </button>
+
+        </div>
+
       </div>
 
     </div>
 
   </div>
+
 </div>

@@ -35,9 +35,17 @@ export class ReservationService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
   getInvoice(id: number) {
-  return this.http.get(
-    `${this.apiUrl}/invoice/${id}`,
-    { responseType: 'blob' }
-  );
-}
+    return this.http.get(
+      `${this.apiUrl}/invoice/${id}`,
+      { responseType: 'blob' }
+    );
+  }
+
+  checkRoomStatus(roomNumber: number) {
+    return this.http.get(`${this.apiUrl}/room-status/${roomNumber}`);
+  }
+  getDashboardStats() 
+  {
+  return this.http.get<any>('http://localhost:8080/api/dashboard/stats');
+  }
 }
