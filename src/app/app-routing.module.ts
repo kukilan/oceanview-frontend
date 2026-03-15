@@ -7,7 +7,7 @@ import { RoomsComponent } from './pages/rooms/rooms.component';
 import { GuestsComponent } from './pages/guests/guests.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ReservationsComponent } from './pages/reservations/reservations.component';
-
+import { HelpComponent } from './pages/help/help.component';
 import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'rooms', component: RoomsComponent },
       { path: 'guests', component: GuestsComponent },
       { path: 'reservations', component: ReservationsComponent },
+      { path: 'help', component: HelpComponent },
 
       // Default inside layout
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
